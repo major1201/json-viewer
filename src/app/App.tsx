@@ -135,10 +135,10 @@ const App = () => {
   );
   return (
     <div className={styles.app}>
-      {!Number(param.corner) && (
+      {param.corner === '0' && (
         <GitHubCorners fixed zIndex={999} size={43} target="__blank" href={param.cornerhref ? param.cornerhref : 'https://github.com/uiwjs/json-viewer'} />
       )}
-      <Split mode="vertical" visiable={false}>
+      <Split mode="vertical" visible={false}>
         {param.hidenheader !== '1' && (
           <div className={styles.header} style={{  }}>
             <h1>JSON Viewer</h1>
@@ -167,7 +167,7 @@ const App = () => {
             </div>
           </div>
         )}
-        <Split style={{ flex: 1, height: param.hidenheader !== '1' ? 'calc(100% - 32px)' : '100%' }}>
+        <Split visible style={{ flex: 1, height: param.hidenheader !== '1' ? 'calc(100% - 32px)' : '100%' }}>
           {!param.view && editor}
           {!param.view && preview}
           {param.view === 'editor' && editor}

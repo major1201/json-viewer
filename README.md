@@ -57,8 +57,8 @@ Relate: https://jaywcjlove.github.io/tools/#/json-format
 ```bash
 # Hiden Header
 https://uiwjs.github.io/json-viewer/#/?hidenheader=1
-# Hiden GitHub Corners
-https://uiwjs.github.io/json-viewer/#/?corner=1
+# Show GitHub Corners (Default: hidden)
+https://uiwjs.github.io/json-viewer/#/?corner=0
 # GitHub corners href
 https://uiwjs.github.io/json-viewer/#/?corner=0&cornerhref=cornerhref=https://github.com/uiwjs/json-viewer
 # view=preview|editor
