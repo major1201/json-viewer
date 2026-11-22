@@ -15,6 +15,7 @@ type Parameters = {
   view?: 'preview'| 'editor';
 }
 const history = createHashHistory();
+const darkModeQuery = '(prefers-color-scheme: dark)';
 const getURLParameters = (url: string): Parameters =>
   ((url.match(/([^?=&]+)(=([^&]*))/g) || []) as any).reduce(
     (a: any, v: string) => (
@@ -44,6 +45,19 @@ const App = () => {
   const [json, setJson] = React.useState();
   const [message, setMessage] = React.useState('');
   const [linebar, setLinebar] = React.useState('');
+  const [isDark, setIsDark] = React.useState(() => window.matchMedia?.(darkModeQuery).matches ?? false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia?.(darkModeQuery);
+    if (!mediaQuery) {
+      return;
+    }
+
+    const handleThemeChange = (event: MediaQueryListEvent) => setIsDark(event.matches);
+    mediaQuery.addEventListener('change', handleThemeChange);
+    setIsDark(mediaQuery.matches);
+    return () => mediaQuery.removeEventListener('change', handleThemeChange);
+  }, []);
   
   const handleJson = useCallback(() => {
     setMessage('');
@@ -89,10 +103,11 @@ const App = () => {
   }, [code, handleJson]);
 
   const editor = (
-    <div style={{ minWidth: 230, width: param.view === 'editor' ? '100%' : '45%', position: 'relative', backgroundColor: 'rgb(245, 245, 245)' }}>
+    <div className={styles.editor} style={{ minWidth: 230, width: param.view === 'editor' ? '100%' : '45%', position: 'relative' }}>
       <div style={{overflow: 'auto',height: '100%', boxSizing: 'border-box' }}>
         <CodeMirror
           value={code}
+          theme={isDark ? 'dark' : 'light'}
           ref={cmRef}
           height="100%"
           style={{ height: '100%' }}
@@ -124,19 +139,27 @@ const App = () => {
   const preview = (
     <div style={{ flex: 1, minWidth: 230, userSelect: 'none', padding: 10, overflow: 'auto' }}>
       {message && (
-        <pre style={{ padding: 0, margin: 0, color: 'red' }}>
+        <pre className={styles.previewError}>
           {message}
         </pre>
       )}
       {json && typeof json == 'object' && (
-        <JsonViewer value={json!} style={{  }} displayDataTypes={false} />
+        <JsonViewer className={styles.jsonTree} value={json!} displayDataTypes={false} />
       )}
     </div>
   );
   return (
     <div className={styles.app}>
       {param.corner === '0' && (
-        <GitHubCorners fixed zIndex={999} size={43} target="__blank" href={param.cornerhref ? param.cornerhref : 'https://github.com/uiwjs/json-viewer'} />
+        <GitHubCorners
+          fixed
+          zIndex={999}
+          size={43}
+          target="__blank"
+          bgColor={isDark ? '#c9d1d9' : undefined}
+          color={isDark ? '#0d1117' : undefined}
+          href={param.cornerhref ? param.cornerhref : 'https://github.com/uiwjs/json-viewer'}
+        />
       )}
       <Split mode="vertical" visible={false}>
         {param.hidenheader !== '1' && (

@@ -41,3 +41,57 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.editor {
+  background-color: #f5f5f5;
+}
+
+.previewError {
+  padding: 0;
+  margin: 0;
+  color: red;
+}
+
+@media (prefers-color-scheme: dark) {
+  .header {
+    background-color: #21262d;
+  }
+
+  .editor {
+    background-color: #282c34;
+  }
+
+  .message {
+    background-color: #7d252c;
+  }
+
+  .previewError {
+    color: #ff7b72;
+  }
+
+  .jsonTree {
+    --w-rjv-color: #c9d1d9;
+    --w-rjv-brackets-color: #8b949e;
+    --w-rjv-key-string: #79c0ff;
+    --w-rjv-key-number: #79c0ff;
+    --w-rjv-quotes-color: #79c0ff;
+    --w-rjv-line-color: #57606a;
+    --w-rjv-info-color: #8b949e;
+    --w-rjv-copied-color: #79c0ff;
+    --w-rjv-ellipsis-color: #8b949e;
+    --w-rjv-type-string-color: #a5d6ff;
+    --w-rjv-quotes-string-color: #a5d6ff;
+    --w-rjv-type-int-color: #79c0ff;
+    --w-rjv-type-float-color: #79c0ff;
+    --w-rjv-type-boolean-color: #ffab70;
+    --w-rjv-type-null-color: #ff7b72;
+    --w-rjv-type-url-color: #79c0ff;
+  }
+
+  .app :global(.w-split) {
+    --w-split-bar-background: #21262d;
+    --w-split-bar-hover-background: #30363d;
+    --w-split-bar-shadow: #57606a;
+    --w-split-bar-shadow-disable: #30363d;
+  }
+}
